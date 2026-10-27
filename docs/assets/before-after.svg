@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" role="img" aria-label="zcode-ops before-after comparison">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#11161f"/>
+    </linearGradient>
+  </defs>
+  <rect width="940" height="640" fill="url(#bg2)"/>
+  <text x="470" y="42" text-anchor="middle" font-family="'Microsoft YaHei', system-ui, sans-serif" font-size="24" font-weight="700" fill="#e6edf3">同样的任务，两种开销</text>
+
+  <!-- ================= LEFT: before ================= -->
+  <rect x="30" y="70" width="420" height="430" rx="12" fill="#1a1114" stroke="#f85149" stroke-width="1.2" opacity="0.96"/>
+  <text x="240" y="104" text-anchor="middle" font-family="'Microsoft YaHei', system-ui, sans-serif" font-size="18" font-weight="700" fill="#f85149">✗ Before — 逐个调用</text>
+
+  <g font-family="Consolas, monospace" font-size="13" fill="#e6edf3">
+    <rect x="60" y="128" width="200" height="34" rx="7" fill="#241a1d" stroke="#6e4348"/>
+    <text x="72" y="150">Read src/a.py</text>
+    <rect x="60" y="178" width="200" height="34" rx="7" fill="#241a1d" stroke="#6e4348"/>
+    <text x="72" y="200">Read src/b.py</text>
+    <rect x="60" y="228" width="200" height="34" rx="7" fill="#241a1d" stroke="#6e4348"/>
+    <text x="72" y="250">Read src/c.py</text>
+    <rect x="60" y="286" width="330" height="34" rx="7" fill="#241a1d" stroke="#6e4348"/>
+    <text x="72" y="308">grep -rn "TODO" .  →  3,000 行</text>
+  </g>
+
+  <!-- round-trip arrows -->
+  <g stroke="#f85149" stroke-width="1.4" fill="none" marker-end="url(#arrR)">
+    <path d="M 268 145 H 300 V 128 H 315"/>
+    <path d="M 268 195 H 300 V 178 H 315"/>
+    <path d="M 268 245 H 300 V 228 H 315"/>
+    <path d="M 398 303 H 420 V 286 H 420"/>
+  </g>
+  <defs>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f85149"/>
+    </marker>
+  </defs>
+  <text x="330" y="172" font-family="'Microsoft YaHei', sans-serif" font-size="11" fill="#c76e6a">每支箭头 = 一次模型往返</text>
+
+  <g font-family="'Microsoft YaHei', system-ui, sans-serif" fill="#ffb4ae">
+    <text x="60" y="366" font-size="20" font-weight="700">≈ 9 次模型往返</text>
+    <text x="60" y="398" font-size="13" fill="#c76e6a">3 个文件 × 3 轮 + 摸索式 ls/grep</text>
+    <text x="60" y="436" font-size="14" fill="#f85149" font-weight="700">失控输出永久占据上下文</text>
+    <text x="60" y="460" font-size="13" fill="#c76e6a">3,000 行结果在之后每一轮请求里重复计费</text>
+  </g>
+
+  <!-- ================= RIGHT: after ================= -->
+  <rect x="490" y="70" width="420" height="430" rx="12" fill="#0f1a14" stroke="#3fb950" stroke-width="1.2" opacity="0.96"/>
+  <text x="700" y="104" text-anchor="middle" font-family="'Microsoft YaHei', system-ui, sans-serif" font-size="18" font-weight="700" fill="#3fb950">✓ After — zcode-ops</text>
+
+  <g font-family="Consolas, monospace" font-size="12.5" fill="#e6edf3">
+    <rect x="520" y="128" width="360" height="40" rx="7" fill="#12251b" stroke="#2e5d40"/>
+    <text x="532" y="146" fill="#7ee787">$ ops.py readfiles \</text>
+    <text x="552" y="162" fill="#9da7b3">a.py@1:80  b.py@40:  c.py</text>
+    <rect x="520" y="188" width="360" height="34" rx="7" fill="#12251b" stroke="#2e5d40"/>
+    <text x="532" y="210" fill="#7ee787">$ ops.py search "TODO" . --mode count</text>
+    <rect x="520" y="242" width="360" height="34" rx="7" fill="#12251b" stroke="#2e5d40"/>
+    <text x="532" y="264" fill="#7ee787">$ ops.py search "TODO" src/ --limit 30</text>
+  </g>
+  <text x="532" y="300" font-family="'Microsoft YaHei', sans-serif" font-size="11" fill="#5ea372">先摸底（11 文件命中）→ 再定向取内容</text>
+
+  <!-- summary box -->
+  <rect x="520" y="322" width="360" height="52" rx="7" fill="#0d1f16" stroke="#2e5d40"/>
+  <g font-family="Consolas, monospace" font-size="11.5" fill="#7ee787">
+    <text x="532" y="342">[zcode-ops] search: scanned=214 matched=11</text>
+    <text x="532" y="358">matches=96 shown=30 out=6.1KB/48KB</text>
+  </g>
+
+  <g font-family="'Microsoft YaHei', system-ui, sans-serif" fill="#aff5b4">
+    <text x="520" y="412" font-size="20" font-weight="700">3 次往返，覆盖面明确</text>
+    <text x="520" y="444" font-size="13" fill="#5ea372">48 KiB 字节预算封顶，超出明确标注不静默丢</text>
+    <text x="520" y="470" font-size="13" fill="#5ea372">utf-8 / GBK 自动识别，写盘前强制 dry-run</text>
+  </g>
+
+  <!-- ================= bottom strip ================= -->
+  <rect x="30" y="524" width="880" height="86" rx="12" fill="#141a26" stroke="#30363d"/>
+  <text x="60" y="558" font-family="'Microsoft YaHei', system-ui, sans-serif" font-size="15" font-weight="700" fill="#e6edf3">跨文件重构也一样：</text>
+  <g font-family="Consolas, monospace" font-size="13">
+    <text x="60" y="590" fill="#f85149">30 × Edit 往返</text>
+    <text x="230" y="590" fill="#6e7681">──→</text>
+    <text x="290" y="590" fill="#7ee787">replace --dry-run（预览 34 处命中） + --yes（原子写） = 2 次调用</text>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="230" viewBox="0 0 900 230" role="img" aria-label="zcode-ops banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="0.55" stop-color="#10192b"/>
+      <stop offset="1" stop-color="#0b1f1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3fb950"/>
+      <stop offset="0.5" stop-color="#58a6ff"/>
+      <stop offset="1" stop-color="#bc8cff"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="230" fill="url(#bg)"/>
+  <rect x="0" y="0" width="900" height="4" fill="url(#accent)"/>
+  <rect x="0" y="226" width="900" height="4" fill="url(#accent)"/>
+
+  <text x="60" y="92" font-family="Consolas, 'JetBrains Mono', monospace" font-size="52" font-weight="700" fill="#e6edf3">zcode-ops</text>
+  <rect x="470" y="56" width="118" height="30" rx="15" fill="none" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="529" y="76" text-anchor="middle" font-family="Consolas, monospace" font-size="14" fill="#3fb950">bounded</text>
+  <rect x="598" y="56" width="118" height="30" rx="15" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="657" y="76" text-anchor="middle" font-family="Consolas, monospace" font-size="14" fill="#58a6ff">batched</text>
+
+  <text x="62" y="128" font-family="'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif" font-size="19" fill="#9da7b3">有界批量文件操作 · 一次 Bash 调用替代多次 Read/Grep 往返 · 省 token 省时间</text>
+
+  <g font-family="Consolas, monospace" font-size="14">
+    <rect x="60" y="152" width="180" height="38" rx="8" fill="#161f30" stroke="#30363d"/>
+    <text x="150" y="176" text-anchor="middle" fill="#79c0ff">map</text>
+    <rect x="252" y="152" width="180" height="38" rx="8" fill="#161f30" stroke="#30363d"/>
+    <text x="342" y="176" text-anchor="middle" fill="#7ee787">readfiles</text>
+    <rect x="444" y="152" width="180" height="38" rx="8" fill="#161f30" stroke="#30363d"/>
+    <text x="534" y="176" text-anchor="middle" fill="#ffa657">search</text>
+    <rect x="636" y="152" width="180" height="38" rx="8" fill="#161f30" stroke="#30363d"/>
+    <text x="726" y="176" text-anchor="middle" fill="#d2a8ff">replace</text>
+  </g>
+  <text x="62" y="212" font-family="'Microsoft YaHei', system-ui, sans-serif" font-size="12" fill="#6e7681">ideas adapted from T-Auto/dsh-ops (MIT) · zero dependencies · Python 3.8+</text>
+</svg>
